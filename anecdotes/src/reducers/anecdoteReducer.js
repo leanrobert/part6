@@ -1,4 +1,4 @@
-import { getAll } from "../services/anecdotes"
+import { createNew, getAll } from "../services/anecdotes"
 
 const anecdoteReducer = (state = [], action) => {
   switch(action.type) {
@@ -22,10 +22,13 @@ const anecdoteReducer = (state = [], action) => {
   }
 }
 
-export const createNote = data => {
-  return {
-    type: 'NEW_NOTE',
-    data
+export const createNote = content => {
+  return async dispatch => {
+    const newNote = await createNew(content)
+    dispatch({
+      type: 'NEW_NOTE',
+      data: newNote
+    })
   }
 }
 

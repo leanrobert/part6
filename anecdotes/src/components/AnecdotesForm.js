@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createNote } from '../reducers/anecdoteReducer'
 import { createdNotification, resetNotification } from '../reducers/notificationReducer'
-import { createNew } from '../services/anecdotes'
 
 const AnecdotesForm = () => {
     const dispatch = useDispatch()
@@ -11,9 +10,8 @@ const AnecdotesForm = () => {
         e.preventDefault()
         const content = e.target.anecdote.value
         e.target.anecdote.value = ''
-        const newNote = await createNew(content)
-        dispatch(createNote(newNote))
-        dispatch(createdNotification(newNote.content))
+        dispatch(createNote(content))
+        dispatch(createdNotification(content))
         setTimeout(() => {
             dispatch(resetNotification())
         }, 5000)
