@@ -11,6 +11,7 @@ const AnecdoteList = () => {
 
         return notes
     })
+    
     const dispatch = useDispatch()
 
     const vote = (anecdote) => {
