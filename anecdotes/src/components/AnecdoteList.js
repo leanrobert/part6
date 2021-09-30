@@ -4,7 +4,13 @@ import { voteNote } from '../reducers/anecdoteReducer'
 import { resetNotification, votedNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
-    const anecdotes = useSelector(state => state.notes)
+    const anecdotes = useSelector(({notes, filter}) => {
+        if (filter) {
+            return notes.filter(note => note.content.includes(filter) && note)
+        }
+
+        return notes
+    })
     const dispatch = useDispatch()
 
     const vote = (anecdote) => {
