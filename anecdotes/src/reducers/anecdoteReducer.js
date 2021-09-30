@@ -1,4 +1,4 @@
-import { createNew, getAll } from "../services/anecdotes"
+import { createNew, getAll, voteOne } from "../services/anecdotes"
 
 const anecdoteReducer = (state = [], action) => {
   switch(action.type) {
@@ -6,16 +6,11 @@ const anecdoteReducer = (state = [], action) => {
       return [...state, action.data]
 
     case 'INIT_NOTES':
-      return action.data
+      return action.data.sort((a, b) => b.votes - a.votes)
 
     case 'VOTE_NOTE':
       const id = action.data.id
-      const findNote = state.find(note => note.id === id)
-      const votedNote = {
-        ...findNote,
-        votes: findNote.votes + 1
-      }
-      return state.map(note => note.id !== id ? note : votedNote).sort((a, b) => b.votes - a.votes)
+      return state.map(note => note.id !== id ? note : action.data).sort((a, b) => b.votes - a.votes)
 
     default:
       return state
@@ -32,10 +27,13 @@ export const createNote = content => {
   }
 }
 
-export const voteNote = id => {
-  return {
-    type: 'VOTE_NOTE',
-    data: { id }
+export const voteNote = anecdote => {
+  return async dispatch => {
+    const note = await voteOne(anecdote)
+    dispatch({
+      type: 'VOTE_NOTE',
+      data: note
+    })
   }
 }
 

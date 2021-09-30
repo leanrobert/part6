@@ -11,11 +11,11 @@ const AnecdoteList = () => {
 
         return notes
     })
-    
+
     const dispatch = useDispatch()
 
     const vote = (anecdote) => {
-        dispatch(voteNote(anecdote.id))
+        dispatch(voteNote(anecdote))
         dispatch(votedNotification(anecdote.content))
         setTimeout(() => {
             dispatch(resetNotification())
