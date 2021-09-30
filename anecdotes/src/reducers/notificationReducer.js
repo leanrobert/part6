@@ -1,18 +1,42 @@
 const notificationReducer = (state = { message: '' }, action) => {
   switch(action.type) {
-    case 'NOTIFY':
-      return [...state, action.data]
+    case 'CREATE_NOTIFICATION':
+      return state = action.data
+    
+    case 'VOTE_NOTIFICATION':
+      return state = action.data
+
+    case 'RESET':
+      return state = action.data
 
     default:
       return state
   }
 }
 
-export const notify = () => {
+export const createdNotification = (content) => {
   return {
-    type: 'NOTIFY',
+    type: 'CREATE_NOTIFICATION',
+    data: {
+      message: `${content} created`
+    }
+  }
+}
+
+export const votedNotification = (content) => {
+  return {
+    type: 'VOTE_NOTIFICATION',
     data: { 
-      message: 'Notificated!'
+      message: `${content} voted`
+    }
+  }
+}
+
+export const resetNotification = () => {
+  return {
+    type: 'RESET',
+    data: {
+      message: ''
     }
   }
 }
