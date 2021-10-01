@@ -1,6 +1,9 @@
+let timer
+
 const notificationReducer = (state = { message: '' }, action) => {
   switch(action.type) {
     case 'CREATE_NOTIFICATION':
+      clearTimeout(timer)
       return state = action.data
 
     case 'RESET':
@@ -19,7 +22,7 @@ export const notificate = (message, time) => {
         message
       }
     })
-    setTimeout(() => {
+    timer = setTimeout(() => {
       dispatch({
         type: 'RESET',
         data: {
